@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Enums\UserStatus;
 
 class AuthService
 {
@@ -26,7 +27,7 @@ class AuthService
             $user = Auth::user();
             if (isset($user) && $user !==null) {
                 $user->tokens()->delete();
-                if($user->status){
+                if($user->status == UserStatus::ACTIVE->value) {
                     $token = $user->createToken('api_token')->plainTextToken;
                     $isActive = true;
                 }

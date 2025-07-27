@@ -9,6 +9,6 @@ enum UserStatus: int
 
     public static function values(): array
     {
-        return array_map(fn(self $status) => $status->value, self::cases());
+        return array_map(fn(self $status) => (string) $status->value, self::cases());
     }
 }
