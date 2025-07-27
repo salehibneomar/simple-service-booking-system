@@ -4,7 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 
 
-Route::controller(AuthController::class)->group(function () {
-    Route::post('/login', 'login')->name('auth.login');
-    Route::post('/logout', 'logout')->name('auth.logout')->middleware('auth:sanctum');
-});
+Route::controller(AuthController::class)
+    ->name('auth.')
+    ->group(function () {
+        Route::post('/login', 'login')->name('login');
+        Route::post('/logout', 'logout')->name('logout')->middleware('auth:sanctum');
+        Route::post('/register', 'register')->name('register');
+    });

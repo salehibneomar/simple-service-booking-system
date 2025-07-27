@@ -2,17 +2,21 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
-    public function login (Request $request) : array
+    public function login (array $data) : array
     {
-        $credentials = $request->only('email', 'password');
-        $isSuccessful = !!(Auth::attempt($credentials));
+        extract($data);
+
+        $isSuccessful = !!(Auth::attempt([
+            'email' => $email,
+            'password' => $password
+        ]));
+
         $token = null;
         $user = null;
         $isActive = false;
@@ -47,4 +51,21 @@ class AuthService
         }
         return $user;
     }
+
+    public function register(array $data): User
+    {
+        extract($data);
+        $password = Hash::make($password);
+
+        $user = new User();
+        $user->name = $name;
+        $user->email = $email;
+        $user->password = $password;
+
+        $user->save();
+
+        return $user->refresh();
+
+    }
+
 }
