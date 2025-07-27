@@ -19,6 +19,6 @@ class DatabaseSeeder extends Seeder
             AdminFactory::new()->create();
         }
 
-        CustomerFactory::new()->count(100)->create();
+        CustomerFactory::new()->count(50)->create();
     }
 }
