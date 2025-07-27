@@ -20,11 +20,10 @@ return new class extends Migration
             $table->enum('status', ServiceStatus::values())
                 ->default(ServiceStatus::AVAILABLE->value)
                 ->comment('1: Available, 0: Not Available');
-            $table->date('timeline');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['id', 'name', 'timeline',]);
+            $table->index(['id', 'name']);
         });
     }
 

@@ -19,8 +19,7 @@ class ServiceOperationRequest extends BaseRequest
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:10000',
             'price' => 'required|numeric',
-            'status' => 'required|in:' . implode(',', ServiceStatus::values()),
-            'timeline' => 'required|date',
+            'status' => 'required|in:' . implode(',', ServiceStatus::values())
         ];
     }
 }
