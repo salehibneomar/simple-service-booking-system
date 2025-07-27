@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Booking;
 
 class Service extends Model
 {
@@ -16,4 +17,9 @@ class Service extends Model
         'status',
         'timeline'
     ];
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'service_id', 'id');
+    }
 }
