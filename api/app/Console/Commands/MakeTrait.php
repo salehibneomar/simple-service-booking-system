@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 
-class MakeService extends GeneratorCommand
+class MakeTrait extends GeneratorCommand
 {
     protected $name = 'make:trait';
     protected $description = 'Create a new trait';
