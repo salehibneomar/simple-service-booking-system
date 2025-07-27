@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             AdminFactory::new()->create();
         }
 
-        // CustomerFactory::new()->count(10)->create();
+        CustomerFactory::new()->count(10)->create();
 
         $chunkSize = 50;
         $total = 200;
