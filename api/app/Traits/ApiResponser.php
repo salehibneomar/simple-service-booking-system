@@ -31,7 +31,7 @@ trait ApiResponser
         );
     }
 
-    protected function listDataResponse(LengthAwarePaginator $list, HttpStatus $status = HttpStatus::OK): JsonResponse
+    protected function listDataResponse(LengthAwarePaginator | array $list, HttpStatus $status = HttpStatus::OK): JsonResponse
     {
         return $this->formatResponse(
             [

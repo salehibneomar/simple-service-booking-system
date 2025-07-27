@@ -64,7 +64,7 @@ class AuthService
 
         $user->save();
 
-        return $user->refresh();
+        return $user;
 
     }
 

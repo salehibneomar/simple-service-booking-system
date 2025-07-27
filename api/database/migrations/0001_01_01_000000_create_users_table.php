@@ -23,7 +23,7 @@ return new class extends Migration
                 ->default(UserRole::CUSTOMER->value);
             $table->enum('status', UserStatus::values())
                 ->default(UserStatus::ACTIVE->value)
-                ->comment('0 = Blocked, 1 = Active');
+                ->comment('1: Active, 0: Blocked');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
