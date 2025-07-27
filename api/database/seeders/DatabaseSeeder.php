@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+
+use Illuminate\Database\Seeder;
 use App\Models\User;
 use Database\Factories\AdminFactory;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
+use Database\Factories\CustomerFactory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,5 +18,7 @@ class DatabaseSeeder extends Seeder
         if (!User::where('email', 'admin@example.com')->exists()) {
             AdminFactory::new()->create();
         }
+
+        CustomerFactory::new()->count(100)->create();
     }
 }
