@@ -8,6 +8,7 @@ use App\Services\AuthService;
 use App\Enums\HttpStatus;
 use \Exception;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 
 class AuthController extends Controller
 {
@@ -23,7 +24,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         try{
-            $authUser = $this->authService->login($request);
+            $authUser = $this->authService->login($request->only('email', 'password'));
             if (!$authUser['attempt']) {
                 return $this->errorResponse(new Exception('Invalid credentials'), HttpStatus::UNAUTHORIZED);
             }
@@ -54,5 +55,15 @@ class AuthController extends Controller
         }
     }
 
+    public function register(RegisterRequest $request)
+    {
+        try {
+            $user = $this->authService->register($request->only('name', 'email', 'password'));
+            return $this->singleModelResponse($user, HttpStatus::CREATED, 'Account created successfully');
+        } catch (Exception $e) {
+            return $this->errorResponse($e);
+        }
+
+    }
 
 }
