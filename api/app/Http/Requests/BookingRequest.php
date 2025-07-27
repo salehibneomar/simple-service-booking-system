@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
+use App\Enums\BookingStatus;
 
-class BookingRequest extends FormRequest
+class BookingRequest extends BaseRequest
 {
 
     public function authorize(): bool
@@ -14,10 +15,19 @@ class BookingRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'service_id' => 'required|integer|exists:services,id',
-            'booking_date' => 'required|date|after_or_equal:today',
-        ];
+        $rules = [];
+        if ($this->isMethod('post')) {
+            $rules = [
+                'service_id' => 'required|integer|exists:services,id',
+                'booking_date' => 'required|date|after_or_equal:today',
+            ];
+        }
+        if ($this->isMethod('put')) {
+            $rules = [
+                'status' => 'required:in:' . implode(',', BookingStatus::values()),
+            ];
+        }
+        return $rules;
     }
 
     public function messages(): array

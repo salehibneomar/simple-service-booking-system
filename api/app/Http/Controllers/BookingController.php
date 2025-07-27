@@ -3,62 +3,67 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\BookingService;
+use \Exception;
+use App\Traits\ApiResponser;
+use App\Http\Requests\BookingRequest;
+use App\Enums\HttpStatus;
+use App\Enums\CrudStatus;
 
 class BookingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    use ApiResponser;
+
+    protected $bookingService;
+
+    public function __construct(BookingService $bookingService)
     {
-        //
+        $this->bookingService = $bookingService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function getAll(Request $request)
     {
-        //
+        try{
+            $bookings = $this->bookingService->getAll($request->all());
+            return $this->listDataResponse($bookings);
+        }
+        catch(Exception $e){
+            return $this->errorResponse($e);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function getCustomerBookings(Request $request)
     {
-        //
+        try{
+            $bookings = $this->bookingService->getCustomerBookings($request->all());
+            return $this->listDataResponse($bookings);
+        }
+        catch(Exception $e){
+            return $this->errorResponse($e);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function store(BookingRequest $request)
     {
-        //
+        try{
+            $booking = $this->bookingService->create($request->validated());
+            return $this->singleModelResponse($booking, HttpStatus::CREATED, CrudStatus::CREATED->value);
+        }
+        catch(Exception $e){
+            return $this->errorResponse($e);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(string $id, BookingRequest $request)
     {
-        //
+        try{
+            $booking = $this->bookingService->update($id, $request->validated());
+            return $this->singleModelResponse($booking, HttpStatus::OK, CrudStatus::UPDATED->value);
+        }
+        catch(Exception $e){
+            return $this->errorResponse($e);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

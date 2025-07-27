@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->enum('status', BookingStatus::values())
+                  ->default(BookingStatus::PENDING->value)
                   ->comment('1: Confirmed, 2: Pending, 0: Cancelled');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('service_id')->constrained()->onDelete('cascade');
