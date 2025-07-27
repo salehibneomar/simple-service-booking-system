@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\UserStatus;
+use App\Enums\UserRole;
 
 return new class extends Migration
 {
@@ -17,8 +19,16 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', UserRole::values())
+                ->default(UserRole::CUSTOMER->value);
+            $table->enum('status', UserStatus::values())
+                ->default(UserStatus::ACTIVE->value)
+                ->comment('0 = Blocked, 1 = Active');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->index(['email', 'status', 'role']);
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

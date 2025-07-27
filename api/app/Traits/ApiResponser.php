@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Enums\HttpStatus;
 use \Exception;
 
-trait ApiResponserTrait
+trait ApiResponser
 {
     private function formatResponse($status, $response = null): JsonResponse
     {
@@ -16,11 +16,6 @@ trait ApiResponserTrait
             'status' => $status,
             'data' => $response,
         ], $status['code']);
-    }
-
-    private function getModelName(Model $data): string
-    {
-        return class_basename($data);
     }
 
     protected function singleModelResponse(Model | array $data, HttpStatus $status = HttpStatus::OK, ?string $customMessage = null): JsonResponse
@@ -53,7 +48,6 @@ trait ApiResponserTrait
         $statusArr = [
             'code' => $status->value,
             'message' => $customMessage ?? $e->getMessage(),
-            'status_message' => $status->message()
         ];
         if ($debug) {
             $statusArr['trace'] = basename($e->getFile()) . ': ' . $e->getLine();
