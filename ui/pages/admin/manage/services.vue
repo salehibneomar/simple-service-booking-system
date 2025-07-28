@@ -74,7 +74,7 @@
 		syncPagingData(response)
 	}
 
-	const onRequest = async (props) => {
+	const onTableRequest = async (props) => {
 		const { page, rowsPerPage } = props.pagination
 		const query = { per_page: rowsPerPage, page }
 		await getAllServices(query)
@@ -147,7 +147,7 @@
 							:rows-per-page-options="[10, 20, 50, 100]"
 							server-side
 							:pagination="pagingData"
-							@request="onRequest"
+							@request="onTableRequest"
 						>
 							<template #body="props">
 								<q-tr :props="props">
