@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Booking::class, 'user_id', 'id');
     }
+
+    public function setStatusAttribute($value)
+    {
+        $this->attributes['status'] = (string) $value;
+    }
 }

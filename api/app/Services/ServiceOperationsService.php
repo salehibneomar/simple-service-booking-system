@@ -20,7 +20,7 @@ class ServiceOperationsService
             $services->where('status', ServiceStatus::AVAILABLE->value);
         }
 
-        return $services->paginate($perPage);
+        return $services->orderBy('id', 'desc')->paginate($perPage);
     }
 
     public function create(array $data) : Service
@@ -42,6 +42,9 @@ class ServiceOperationsService
 
     public function update(string $id, array $data) : Service
     {
+        if (isset($data['status'])) {
+            $data['status'] = (string) $data['status'];
+        }
         $service = Service::findOrFail($id);
         $service->fill($data);
         $service->save();
