@@ -24,7 +24,8 @@ class BookingService
 
         return Booking::where('user_id', $customerId)
             ->with('service', 'user')
-            ->orderBy('booking_date', 'desc')
+            ->orderBy('booking_date', 'asc')
+            ->orderBy('id', 'desc')
             ->paginate($perPage);
     }
 
