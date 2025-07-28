@@ -3,7 +3,7 @@
 		name: 'ServiceCard'
 	})
 
-	defineEmits(['book-service'])
+	const emit = defineEmits(['on-service-book'])
 
 	const props = defineProps({
 		service: {
@@ -17,6 +17,10 @@
 			? props.service?.description?.slice(0, 100) + '...'
 			: props.service?.description
 	})
+
+	const onServiceBook = () => {
+		emit('on-service-book', props.service)
+	}
 </script>
 
 <template>
@@ -25,9 +29,9 @@
 		bordered
 		flat
 		class="shadow-3 column full-height full-width"
-		style="border-radius: 8px"
+		style="border-radius: 5px"
 	>
-		<q-card-section class="bg-blue-grey-1 rounded-borders-top">
+		<q-card-section class="bg-blue-grey-1">
 			<div class="text-body1 text-bold text-primary q-mb-sm">{{ service?.name }}</div>
 			<q-chip
 				dense
@@ -36,7 +40,7 @@
 				text-color="grey-7"
 				style="padding: 4px 8px; font-size: 13px"
 			>
-				<q-icon name="sell" />&ensp;Price: {{ Number(service?.price).toFixed(2) }}
+				<q-icon name="sell" />&ensp;Price: {{ +service?.price?.toFixed(2) }}
 			</q-chip>
 		</q-card-section>
 
@@ -55,7 +59,7 @@
 				color="blue-1"
 				text-color="blue-7"
 				size="12px"
-				@click="$emit('book-service', service)"
+				@click="onServiceBook"
 			>
 				Book Now
 			</q-btn>

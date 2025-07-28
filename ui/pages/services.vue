@@ -12,6 +12,7 @@ div
 	})
 
 	const servicesStore = useServiceStore()
+	const bookingStore = useBookingStore()
 
 	const fetching = ref(true)
 	const pagingData = ref({
@@ -20,8 +21,7 @@ div
 		total: 0,
 		to: 0,
 		per_page: 12,
-		from: 0,
-		page: 1
+		from: 0
 	})
 
 	onMounted(async () => {
@@ -56,20 +56,44 @@ div
 		pagingData.value.page = page
 		await getAllServices({ page })
 	}
+
+	const datePopupOpened = ref(false)
+	const serviceToBook = ref({})
+	const serviceBookingDate = ref(null)
+	const openDatePopup = (service) => {
+		serviceToBook.value = service
+		datePopupOpened.value = true
+	}
+
+	const restrictPastDateSelection = (date) => {
+		const today = new Date()
+		const option = new Date(date)
+		return option >= today
+	}
+
+	const submitting = ref(false)
+	const handleServiceBook = async () => {
+		submitting.value = true
+		if (serviceBookingDate.value) {
+			const payload = {
+				service_id: serviceToBook.value.id,
+				booking_date: serviceBookingDate.value
+			}
+			await bookingStore.book(payload)
+			serviceBookingDate.value = null
+			serviceToBook.value = {}
+			datePopupOpened.value = false
+		}
+		submitting.value = false
+	}
 </script>
 
 <template>
 	<q-page padding>
 		<div class="row justify-start items-center q-mb-lg">
 			<div />
-			<q-chip
-				v-if="!fetching && pagingData.total > 0"
-				color="primary"
-				text-color="white"
-				icon="category"
-				outline
-			>
-				{{ pagingData.total }} Available Services
+			<q-chip color="primary" text-color="white" icon="category" outline>
+				{{ pagingData.total || 0 }} Available Services
 			</q-chip>
 		</div>
 
@@ -86,7 +110,7 @@ div
 				:key="service?.id"
 				class="col-12 col-sm-6 col-md-3 col-lg-3 row justify-center"
 			>
-				<ServiceCard class="col-12" :service="service" />
+				<ServiceCard class="col-12" :service="service" @on-service-book="openDatePopup" />
 			</div>
 		</div>
 
@@ -97,9 +121,9 @@ div
 			</div>
 		</div>
 
-		<div v-if="pagingData.to > 1" class="row justify-center q-mt-lg q-pt-xs">
+		<div v-if="pagingData?.last_page > 1" class="row justify-center q-mt-lg q-pt-xs">
 			<q-pagination
-				v-model="pagingData.page"
+				v-model="pagingData.current_page"
 				:max="pagingData.last_page"
 				max-pages="5"
 				direction-links
@@ -114,5 +138,36 @@ div
 				@update:model-value="onPageChange"
 			/>
 		</div>
+
+		<q-dialog v-model="datePopupOpened" persistent>
+			<q-card flat class="q-pa-none" style="width: 400px">
+				<q-card-section class="q-pa-none q-mb-none">
+					<q-date
+						v-model="serviceBookingDate"
+						flat
+						today-btn
+						no-unset
+						mask="YYYY-MM-DD"
+						class="full-width q-mb-none q-pb-none"
+						:options="restrictPastDateSelection"
+					/>
+				</q-card-section>
+				<q-card-section class="q-mt-none" style="margin-top: -35px">
+					<p class="text-grey-7 text-caption text-center">
+						Please select a date to book the service
+					</p>
+				</q-card-section>
+				<q-card-actions align="right">
+					<q-btn v-close-popup flat label="Close" color="grey" @click="serviceBookingDate = null" />
+					<q-btn
+						flat
+						label="Save"
+						color="primary"
+						:disable="!serviceBookingDate || submitting"
+						@click="handleServiceBook"
+					/>
+				</q-card-actions>
+			</q-card>
+		</q-dialog>
 	</q-page>
 </template>
