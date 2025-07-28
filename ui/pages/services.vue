@@ -20,8 +20,7 @@ div
 		total: 0,
 		to: 0,
 		per_page: 12,
-		from: 0,
-		page: 1
+		from: 0
 	})
 
 	onMounted(async () => {
@@ -64,7 +63,7 @@ div
 			<div />
 			<q-chip
 				v-if="!fetching && pagingData.total > 0"
-				color="primary"
+				color="positive"
 				text-color="white"
 				icon="category"
 				outline
@@ -97,9 +96,9 @@ div
 			</div>
 		</div>
 
-		<div v-if="pagingData.to > 1" class="row justify-center q-mt-lg q-pt-xs">
+		<div v-if="pagingData?.to > 1" class="row justify-center q-mt-lg q-pt-xs">
 			<q-pagination
-				v-model="pagingData.page"
+				v-model="pagingData.current_page"
 				:max="pagingData.last_page"
 				max-pages="5"
 				direction-links
