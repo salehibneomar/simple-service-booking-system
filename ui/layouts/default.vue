@@ -1,4 +1,6 @@
 <script setup>
+	import { drawerLinks } from '~/assets/drawer-links'
+
 	const route = useRoute()
 	const authStore = useAuthStore()
 
@@ -8,29 +10,35 @@
 		return route.meta && route.meta.title ? route.meta.title : route.name || 'Dashboard'
 	})
 
+	const userRole = computed(() => authStore.authUserRole)
+	const menuItems = computed(() => {
+		return drawerLinks[userRole.value] || []
+	})
+
 	const handleLogout = async () => {
 		await authStore.logout()
 	}
 </script>
 
 <template>
-	<q-layout view="lHh Lpr lFf">
+	<q-layout view="lHh Lpr lFf" class="bg-grey-2">
 		<q-drawer v-model="drawer" show-if-above side="left" bordered>
 			<div class="column fit">
 				<q-list class="q-mt-md">
-					<q-item-label header class="text-grey-8 text-weight-bold q-mb-md">Menu</q-item-label>
-					<q-item v-ripple clickable>
+					<q-item-label header class="text-grey-8 text-weight-bold q-mb-md text-uppercase">{{
+						userRole
+					}}</q-item-label>
+					<q-item v-for="item in menuItems" :key="item.slug" v-ripple clickable :to="item.route">
 						<q-item-section avatar>
-							<q-icon name="dashboard" />
+							<q-icon :name="item.icon" />
 						</q-item-section>
-						<q-item-section>Dashboard</q-item-section>
+						<q-item-section>{{ item.label }}</q-item-section>
 					</q-item>
-					<!-- Add more navigation items here -->
 				</q-list>
 				<q-space />
 				<q-separator class="q-my-none" />
 				<q-list>
-					<q-item v-ripple clickable class="text-negative" @click="handleLogout">
+					<q-item v-ripple clickable @click="handleLogout">
 						<q-item-section avatar>
 							<q-icon name="logout" />
 						</q-item-section>

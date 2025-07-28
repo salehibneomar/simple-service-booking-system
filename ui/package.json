@@ -1,5 +1,5 @@
 {
-	"name": "nuxt-app",
+	"name": "simple-service-booking-system",
 	"private": true,
 	"type": "module",
 	"scripts": {

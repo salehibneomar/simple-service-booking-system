@@ -1,4 +1,6 @@
 <script setup>
+	import { roleRootRoutes } from '~/assets/role-root-routes'
+
 	definePageMeta({
 		name: 'login',
 		title: 'Login',
@@ -35,7 +37,7 @@
 	const handleLogin = async () => {
 		const response = await authStore.login(formData.value)
 		if (response && authStore.hasAuthUser) {
-			router.push('/')
+			router.push({ path: roleRootRoutes[authStore.authUserRole] || '/' })
 		}
 	}
 </script>
