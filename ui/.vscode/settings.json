@@ -1,0 +1,12 @@
+{
+  "eslint.validate": ["javascript", "typescript", "vue"],
+  "eslint.options": {
+    "extensions": [".js", ".ts", ".vue"]
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "eslint.useFlatConfig": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  }
+}
