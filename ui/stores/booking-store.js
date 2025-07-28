@@ -19,12 +19,12 @@ export const useBookingStore = defineStore('bookingStore', () => {
 		return response
 	}
 
-	const getBookingsByUser = async (query = {}) => {
+	const customerBookings = async (query = {}) => {
 		let response = null
 		try {
 			const {
 				data: { status, data }
-			} = await bookingService.getBookingsByUser(query)
+			} = await bookingService.customerBookings(query)
 			if (+status.code === 200) {
 				bookings.value = data.data
 				delete data.data
@@ -39,6 +39,6 @@ export const useBookingStore = defineStore('bookingStore', () => {
 	return {
 		bookings,
 		book,
-		getBookingsByUser
+		customerBookings
 	}
 })

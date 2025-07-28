@@ -94,6 +94,7 @@
 						label="Register"
 						color="primary"
 						class="full-width q-mb-md q-mt-sm"
+						unelevated
 					/>
 				</q-form>
 			</q-card-section>

@@ -69,7 +69,13 @@
 						:rules="[(val) => !!val || 'Password is required']"
 						hide-bottom-space
 					/>
-					<q-btn type="submit" label="Login" color="primary" class="full-width q-mb-md q-mt-sm" />
+					<q-btn
+						unelevated
+						type="submit"
+						label="Login"
+						color="primary"
+						class="full-width q-mb-md q-mt-sm"
+					/>
 				</q-form>
 			</q-card-section>
 			<q-separator />

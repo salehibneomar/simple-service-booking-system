@@ -17,7 +17,7 @@
 	<q-page padding>
 		<div class="row justify-center items-center">
 			<div class="col-12">
-				<q-card class="q-pa-xl shadow-2 q-mt-lg">
+				<q-card flat bordered class="q-pa-xl shadow-2 q-mt-lg">
 					<q-card-section class="row items-center q-gutter-md">
 						<q-avatar size="64px" color="primary" text-color="white" icon="admin_panel_settings" />
 						<div>

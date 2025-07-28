@@ -125,7 +125,7 @@
 	<q-page padding>
 		<div class="row justify-center">
 			<div class="col-12">
-				<q-card class="q-pa-xl shadow-2 q-mt-lg">
+				<q-card flat bordered class="q-pa-xl shadow-2 q-mt-lg">
 					<q-card-section class="row items-center q-gutter-md">
 						<q-avatar size="48px" color="primary" text-color="white" icon="build" />
 						<div>

@@ -92,14 +92,8 @@ div
 	<q-page padding>
 		<div class="row justify-start items-center q-mb-lg">
 			<div />
-			<q-chip
-				v-if="!fetching && pagingData.total > 0"
-				color="primary"
-				text-color="white"
-				icon="category"
-				outline
-			>
-				{{ pagingData.total }} Available Services
+			<q-chip color="primary" text-color="white" icon="category" outline>
+				{{ pagingData.total || 0 }} Available Services
 			</q-chip>
 		</div>
 
@@ -127,7 +121,7 @@ div
 			</div>
 		</div>
 
-		<div v-if="pagingData?.to > 1" class="row justify-center q-mt-lg q-pt-xs">
+		<div v-if="pagingData?.last_page > 1" class="row justify-center q-mt-lg q-pt-xs">
 			<q-pagination
 				v-model="pagingData.current_page"
 				:max="pagingData.last_page"

@@ -29,9 +29,9 @@
 		bordered
 		flat
 		class="shadow-3 column full-height full-width"
-		style="border-radius: 8px"
+		style="border-radius: 5px"
 	>
-		<q-card-section class="bg-blue-grey-1 rounded-borders-top">
+		<q-card-section class="bg-blue-grey-1">
 			<div class="text-body1 text-bold text-primary q-mb-sm">{{ service?.name }}</div>
 			<q-chip
 				dense
