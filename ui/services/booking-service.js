@@ -7,7 +7,9 @@ export const useBookingService = () => {
 	}
 
 	const getBookingsByUser = async (query = {}) => {
-		return query
+		return await client.get(`/${TARGET}`, {
+			params: query
+		})
 	}
 
 	return {
