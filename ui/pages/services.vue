@@ -12,6 +12,7 @@ div
 	})
 
 	const servicesStore = useServiceStore()
+	const bookingStore = useBookingStore()
 
 	const fetching = ref(true)
 	const pagingData = ref({
@@ -70,8 +71,20 @@ div
 		return option >= today
 	}
 
+	const submitting = ref(false)
 	const handleServiceBook = async () => {
-		console.log(serviceToBook.value, serviceBookingDate.value)
+		submitting.value = true
+		if (serviceBookingDate.value) {
+			const payload = {
+				service_id: serviceToBook.value.id,
+				booking_date: serviceBookingDate.value
+			}
+			await bookingStore.book(payload)
+			serviceBookingDate.value = null
+			serviceToBook.value = {}
+			datePopupOpened.value = false
+		}
+		submitting.value = false
 	}
 </script>
 
@@ -151,12 +164,12 @@ div
 					</p>
 				</q-card-section>
 				<q-card-actions align="right">
-					<q-btn v-close-popup flat label="Close" color="grey" />
+					<q-btn v-close-popup flat label="Close" color="grey" @click="serviceBookingDate = null" />
 					<q-btn
 						flat
 						label="Save"
 						color="primary"
-						:disable="!serviceBookingDate"
+						:disable="!serviceBookingDate || submitting"
 						@click="handleServiceBook"
 					/>
 				</q-card-actions>
