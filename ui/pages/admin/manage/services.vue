@@ -126,14 +126,14 @@
 		<div class="row justify-center">
 			<div class="col-12">
 				<q-card flat bordered class="q-pa-xl shadow-2 q-mt-lg">
-					<q-card-section class="row items-center q-gutter-md">
+					<q-card-section class="row items-center q-gutter-md q-mb-none q-pb-none">
 						<q-avatar size="48px" color="primary" text-color="white" icon="build" />
 						<div>
 							<div class="text-h6 text-weight-bold">Manage Services</div>
 							<div class="text-caption text-grey-7">View and manage all available services</div>
 						</div>
 					</q-card-section>
-					<q-separator />
+
 					<q-card-section v-if="!fetching">
 						<q-table
 							:key="`${pagingData.current_page}-${pagingData.per_page}-${pagingData.total}`"
