@@ -26,6 +26,7 @@ div
 
 	onMounted(async () => {
 		await getAllServices()
+		fetching.value = false
 	})
 
 	const syncPagingData = (response) => {
@@ -43,13 +44,11 @@ div
 	}
 
 	const getAllServices = async (query = {}) => {
-		fetching.value = true
 		const response = await servicesStore.getAll({
 			...pagingData.value,
 			...query
 		})
 		syncPagingData(response)
-		fetching.value = false
 	}
 
 	const onPageChange = async (page) => {
@@ -140,7 +139,7 @@ div
 		</div>
 
 		<q-dialog v-model="datePopupOpened" persistent>
-			<q-card flat class="q-pa-none" style="width: 400px">
+			<q-card flat class="q-pa-none" style="width: 350px">
 				<q-card-section class="q-pa-none q-mb-none">
 					<q-date
 						v-model="serviceBookingDate"
@@ -157,6 +156,7 @@ div
 						Please select a date to book the service
 					</p>
 				</q-card-section>
+				<q-separator />
 				<q-card-actions align="right">
 					<q-btn v-close-popup flat label="Close" color="grey" @click="serviceBookingDate = null" />
 					<q-btn

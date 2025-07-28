@@ -3,19 +3,22 @@ export const useBookingStore = defineStore('bookingStore', () => {
 
 	const bookings = ref([])
 
-	const book = async (payload) => {
+	const getAll = async (query = {}) => {
 		let response = null
+
 		try {
 			const {
 				data: { status, data }
-			} = await bookingService.book(payload)
-			if (+status.code === 201) {
+			} = await bookingService.getAll(query)
+			if (+status.code === 200) {
+				bookings.value = data.data
+				delete data.data
 				response = data
-				bookings.value.unshift(response)
 			}
 		} catch (error) {
-			console.error('Booking failed:', error)
+			console.error('Failed to fetch bookings:', error)
 		}
+
 		return response
 	}
 
@@ -36,9 +39,46 @@ export const useBookingStore = defineStore('bookingStore', () => {
 		return response
 	}
 
+	const book = async (payload) => {
+		let response = null
+		try {
+			const {
+				data: { status, data }
+			} = await bookingService.book(payload)
+			if (+status.code === 201) {
+				response = data
+				bookings.value.unshift(response)
+			}
+		} catch (error) {
+			console.error('Booking failed:', error)
+		}
+		return response
+	}
+
+	const updateStatus = async (id, payload) => {
+		let response = null
+		try {
+			const {
+				data: { status, data }
+			} = await bookingService.updateStatus(id, payload)
+			if (+status.code === 200) {
+				const index = bookings.value.findIndex((booking) => +booking.id === +id)
+				if (index !== -1) {
+					bookings.value[index] = { ...bookings.value[index], ...data }
+				}
+				response = data
+			}
+		} catch (error) {
+			console.error('Failed to update booking status:', error)
+		}
+		return response
+	}
+
 	return {
 		bookings,
 		book,
-		customerBookings
+		customerBookings,
+		getAll,
+		updateStatus
 	}
 })
