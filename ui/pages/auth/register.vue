@@ -35,7 +35,6 @@
 
 	const handleRegister = async () => {
 		const response = await authStore.register(formData.value)
-		console.log(response)
 		if (response) {
 			await router.push({ path: '/auth/login', query: { registered: response?.email } })
 		}

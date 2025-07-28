@@ -21,6 +21,23 @@ export const useServiceStore = defineStore('serviceStore', () => {
 		return response
 	}
 
+	const create = async (payload) => {
+		let response = null
+		try {
+			const {
+				data: { status, data }
+			} = await servicesService.create(payload)
+			if (+status.code === 201) {
+				services.value.unshift(data)
+				response = data
+			}
+		} catch (error) {
+			console.error('Failed to create service:', error)
+		}
+
+		return response
+	}
+
 	const remove = async (id) => {
 		let response = null
 		try {
@@ -38,10 +55,32 @@ export const useServiceStore = defineStore('serviceStore', () => {
 		return response
 	}
 
+	const update = async (id, payload) => {
+		let response = null
+		try {
+			const {
+				data: { status, data }
+			} = await servicesService.update(id, payload)
+			if (+status.code === 200) {
+				const index = services.value?.findIndex((service) => +service.id === +id)
+				if (index !== -1) {
+					services.value[index] = { ...services.value[index], ...data }
+				}
+				response = data
+			}
+		} catch (error) {
+			console.error('Failed to update service:', error)
+		}
+
+		return response
+	}
+
 	return {
 		services,
 		service,
 		getAll,
-		remove
+		remove,
+		create,
+		update
 	}
 })

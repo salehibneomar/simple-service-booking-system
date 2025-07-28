@@ -38,7 +38,7 @@ export default defineNuxtConfig({
 	plugins: [],
 
 	quasar: {
-		plugins: ['Dialog', 'LoadingBar', 'Notify'],
+		plugins: ['Dialog', 'Loading', 'LoadingBar', 'Notify'],
 		extras: {
 			font: 'roboto-font'
 		},

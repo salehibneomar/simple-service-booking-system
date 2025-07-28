@@ -1,5 +1,7 @@
 <script setup>
+	import { ref } from 'vue'
 	import { useQuasar } from 'quasar'
+	import ServiceDialog from '@/components/ServiceDialog.vue'
 
 	definePageMeta({
 		name: 'manage-services',
@@ -24,11 +26,13 @@
 			field: 'price',
 			align: 'left'
 		},
+		{ name: 'description', label: 'Description', field: 'description', align: 'left' },
 		{ name: 'status', label: 'Status', field: 'status', align: 'center' },
 		{ name: 'action', label: 'Action', field: 'action', align: 'center' }
 	]
 
 	const fetching = ref(true)
+	const submitting = ref(false)
 
 	onMounted(async () => {
 		await getAllServices()
@@ -94,6 +98,29 @@
 			await deleteService(id)
 		})
 	}
+
+	const createServiceDialogOpen = ref(false)
+	const handleServiceCreation = async (formData) => {
+		submitting.value = true
+		await servicesStore.create(formData)
+		createServiceDialogOpen.value = false
+		submitting.value = false
+	}
+
+	const updateServiceDialogOpen = ref(false)
+	const serviceToUpdate = ref({})
+	const onServiceEditClick = (service) => {
+		updateServiceDialogOpen.value = true
+		serviceToUpdate.value = { ...service, status: +service.status }
+	}
+
+	const handleServiceUpdate = async (formData) => {
+		submitting.value = true
+		await servicesStore.update(serviceToUpdate.value?.id, formData)
+		updateServiceDialogOpen.value = false
+		submitting.value = false
+		serviceToUpdate.value = {}
+	}
 </script>
 
 <template>
@@ -131,6 +158,15 @@
 									<q-td key="price" :props="props">{{
 										props.row?.price !== undefined ? `${props.row?.price.toFixed(2)}` : ''
 									}}</q-td>
+									<q-td key="description" :props="props">
+										<div class="ellipsis" style="max-width: 200px">
+											{{
+												props.row?.description && props.row?.description?.length
+													? props.row?.description
+													: 'N/A'
+											}}
+										</div>
+									</q-td>
 									<q-td key="status" :props="props">
 										<q-chip
 											:label="serviceStatus[props.row?.status]?.text || 'N/A'"
@@ -141,13 +177,25 @@
 									</q-td>
 									<q-td key="action" :props="props">
 										<q-btn
+											color="primary"
+											icon="edit"
+											size="sm"
+											flat
+											round
+											@click="onServiceEditClick(props.row)"
+										>
+											<q-tooltip> Edit </q-tooltip>
+										</q-btn>
+										<q-btn
 											color="negative"
 											icon="delete"
 											size="sm"
 											flat
 											round
 											@click="showDeleteDialog(props.row?.id)"
-										/>
+										>
+											<q-tooltip> Delete </q-tooltip>
+										</q-btn>
 									</q-td>
 								</q-tr>
 							</template>
@@ -159,6 +207,27 @@
 				</q-card>
 			</div>
 		</div>
+
+		<ServiceDialog
+			v-model="createServiceDialogOpen"
+			:submitting="submitting"
+			@on-save="handleServiceCreation"
+		/>
+
+		<ServiceDialog
+			v-model="updateServiceDialogOpen"
+			label="Update Service"
+			operation="update"
+			:submitting="submitting"
+			:service-value="serviceToUpdate"
+			@on-save="handleServiceUpdate"
+		/>
+
+		<q-page-sticky position="bottom-right" :offset="[50, 18]">
+			<q-btn color="primary" icon="add" size="md" round @click="createServiceDialogOpen = true">
+				<q-tooltip> Add a new service </q-tooltip>
+			</q-btn>
+		</q-page-sticky>
 	</q-page>
 </template>
 
