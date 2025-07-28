@@ -139,7 +139,7 @@ div
 		</div>
 
 		<q-dialog v-model="datePopupOpened" persistent>
-			<q-card flat class="q-pa-none" style="width: 400px">
+			<q-card flat class="q-pa-none" style="width: 350px">
 				<q-card-section class="q-pa-none q-mb-none">
 					<q-date
 						v-model="serviceBookingDate"
