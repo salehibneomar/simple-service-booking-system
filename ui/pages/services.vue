@@ -69,6 +69,10 @@ div
 		const option = new Date(date)
 		return option >= today
 	}
+
+	const handleServiceBook = async () => {
+		console.log(serviceToBook.value, serviceBookingDate.value)
+	}
 </script>
 
 <template>
@@ -135,6 +139,7 @@ div
 						v-model="serviceBookingDate"
 						flat
 						today-btn
+						no-unset
 						mask="YYYY-MM-DD"
 						class="full-width q-mb-none q-pb-none"
 						:options="restrictPastDateSelection"
@@ -147,7 +152,13 @@ div
 				</q-card-section>
 				<q-card-actions align="right">
 					<q-btn v-close-popup flat label="Close" color="grey" />
-					<q-btn flat label="Save" color="primary" />
+					<q-btn
+						flat
+						label="Save"
+						color="primary"
+						:disable="!serviceBookingDate"
+						@click="handleServiceBook"
+					/>
 				</q-card-actions>
 			</q-card>
 		</q-dialog>
