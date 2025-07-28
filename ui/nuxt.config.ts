@@ -50,7 +50,7 @@ export default defineNuxtConfig({
 		},
 		config: {
 			notify: {
-				timeout: 2000,
+				timeout: 1000,
 				progress: true,
 				actions: [
 					{

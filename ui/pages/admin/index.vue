@@ -1,13 +1,13 @@
 <script setup>
 	definePageMeta({
-		name: 'dashboard',
+		name: 'admin-dashboard',
 		title: 'Dashboard',
 		requireAuth: true,
-		roles: ['customer']
+		roles: ['admin']
 	})
 
 	useHead({
-		title: 'Dashboard | Customer'
+		title: 'Dashboard | Admin'
 	})
 
 	const authStore = useAuthStore()

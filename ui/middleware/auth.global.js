@@ -1,3 +1,5 @@
+import { roleRootRoutes } from '~/assets/role-root-routes'
+
 export default defineNuxtRouteMiddleware((to) => {
 	const authStore = useAuthStore()
 	const roles = to.meta?.roles || []
@@ -7,7 +9,7 @@ export default defineNuxtRouteMiddleware((to) => {
 		if (!authStore.hasAuthUser) {
 			return navigateTo('/auth/login')
 		} else if (roles?.length && !hasRoleMatch(roles, authStore.authUserRole)) {
-			return navigateTo('/')
+			return navigateTo(roleRootRoutes[authStore.authUserRole])
 		}
 	}
 })
