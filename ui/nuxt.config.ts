@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	compatibilityDate: '2025-07-15',
-	devtools: { enabled: true },
+	devtools: { enabled: false },
 
 	modules: [
 		'@nuxt/eslint',
@@ -22,6 +22,26 @@ export default defineNuxtConfig({
 	},
 
 	plugins: [],
+
+	vite: {
+		define: {
+			global: 'globalThis'
+		},
+		resolve: {
+			alias: {
+				'form-data': 'form-data'
+			}
+		},
+		optimizeDeps: {
+			include: ['axios', 'form-data']
+		}
+	},
+
+	nitro: {
+		experimental: {
+			wasm: true
+		}
+	},
 
 	quasar: {
 		plugins: ['Dialog', 'Loading', 'LoadingBar', 'Notify'],
