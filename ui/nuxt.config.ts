@@ -13,16 +13,6 @@ export default defineNuxtConfig({
 		'nuxt-quasar-ui'
 	],
 
-	pinia: {
-		storesDirs: ['stores/**']
-	},
-
-	imports: {
-		dirs: ['composables', 'utils', 'types', 'services']
-	},
-
-	plugins: [],
-
 	vite: {
 		define: {
 			global: 'globalThis'
@@ -37,18 +27,25 @@ export default defineNuxtConfig({
 		}
 	},
 
-	nitro: {
-		experimental: {
-			wasm: true
-		}
+	pinia: {
+		storesDirs: ['stores/**']
 	},
 
+	imports: {
+		dirs: ['composables', 'utils', 'types', 'services']
+	},
+
+	plugins: [],
+
 	quasar: {
-		plugins: ['Dialog', 'Loading', 'LoadingBar', 'Notify'],
+		plugins: ['Dialog', 'LoadingBar', 'Notify'],
 		extras: {
 			font: 'roboto-font'
 		},
 		config: {
+			loadingBar: {
+				color: 'white'
+			},
 			notify: {
 				timeout: 1000,
 				progress: true,
