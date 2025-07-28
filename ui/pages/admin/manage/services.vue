@@ -1,7 +1,5 @@
 <script setup>
-	import { ref } from 'vue'
 	import { useQuasar } from 'quasar'
-	import ServiceDialog from '@/components/ServiceDialog.vue'
 
 	definePageMeta({
 		name: 'manage-services',

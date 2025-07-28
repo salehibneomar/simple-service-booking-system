@@ -1,7 +1,4 @@
 <script setup>
-	import { ref, watch } from 'vue'
-	import { serviceStatusOptions } from '@/utils/status.js'
-
 	defineOptions({
 		name: 'ServiceDialog'
 	})
