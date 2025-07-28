@@ -14,7 +14,7 @@ class ServiceOperationsService
     public function getAll(array $filters = []): LengthAwarePaginator {
         $perPage = $filters['per_page'] ?? 20;
         $services = Service::query();
-        $isCustomer = Auth::user()->role === UserRole::CUSTOMER;
+        $isCustomer = Auth::user()->role === UserRole::CUSTOMER->value;
 
         if ($isCustomer) {
             $services->where('status', ServiceStatus::AVAILABLE->value);
