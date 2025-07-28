@@ -21,4 +21,9 @@ class Service extends Model
     {
         return $this->hasMany(Booking::class, 'service_id', 'id');
     }
+
+    public function setStatusAttribute($value)
+    {
+        $this->attributes['status'] = (string) $value;
+    }
 }

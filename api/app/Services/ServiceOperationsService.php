@@ -14,13 +14,13 @@ class ServiceOperationsService
     public function getAll(array $filters = []): LengthAwarePaginator {
         $perPage = $filters['per_page'] ?? 20;
         $services = Service::query();
-        $isCustomer = Auth::user()->role === UserRole::CUSTOMER;
+        $isCustomer = Auth::user()->role === UserRole::CUSTOMER->value;
 
         if ($isCustomer) {
             $services->where('status', ServiceStatus::AVAILABLE->value);
         }
 
-        return $services->paginate($perPage);
+        return $services->orderBy('id', 'desc')->paginate($perPage);
     }
 
     public function create(array $data) : Service
@@ -42,6 +42,9 @@ class ServiceOperationsService
 
     public function update(string $id, array $data) : Service
     {
+        if (isset($data['status'])) {
+            $data['status'] = (string) $data['status'];
+        }
         $service = Service::findOrFail($id);
         $service->fill($data);
         $service->save();

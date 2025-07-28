@@ -29,4 +29,8 @@ class Booking extends Model
     }
 
 
+    public function setStatusAttribute($value)
+    {
+        $this->attributes['status'] = (string) $value;
+    }
 }
