@@ -15,8 +15,6 @@ Watch the application in action:
 
 [![Simple Service Booking System Demo](https://img.youtube.com/vi/lmhR__9-Yww/maxresdefault.jpg)](https://youtu.be/lmhR__9-Yww)
 
-[🎬 View Demo Video](https://youtu.be/lmhR__9-Yww)
-
 ## 📁 Project Structure
 
 ```
