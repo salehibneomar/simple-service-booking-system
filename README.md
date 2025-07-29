@@ -176,3 +176,4 @@ The application will be available at `http://localhost:3000`
 
 - **Backend API Documentation**: See `api/README.md`
 - **Frontend UI Documentation**: See `ui/README.md`
+- **Postman Collection**: [API Testing Collection](https://tinyurl.com/3ew8c66h)
