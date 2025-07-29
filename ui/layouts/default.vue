@@ -21,7 +21,7 @@
 </script>
 
 <template>
-	<q-layout view="lHh Lpr lFf" class="bg-grey-2">
+	<q-layout view="lHh Lpr lfl" class="bg-grey-2">
 		<q-drawer v-model="drawer" show-if-above side="left" bordered>
 			<div class="column fit">
 				<q-list class="q-mt-md">
@@ -58,5 +58,9 @@
 		<q-page-container>
 			<slot />
 		</q-page-container>
+
+		<q-footer class="flex flex-center q-pa-sm bg-transparent text-grey-8 text-body2">
+			<span>&copy; {{ currentYear }} Saleh Ibne Omar</span>
+		</q-footer>
 	</q-layout>
 </template>
