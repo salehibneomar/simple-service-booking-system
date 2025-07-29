@@ -1,61 +1,158 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## 📋 Project Overview
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+The Simple Service Booking System API is a Laravel-based RESTful API that provides a comprehensive booking management system. This API allows customers to browse and book services while providing administrators with full control over service management and booking administration.
 
-## About Laravel
+## 📋 System Requirements
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Software Dependencies
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   **PHP**: Version 8.2 or higher
+-   **Composer**: Latest version
+-   **MySQL**: Version 8.0 or higher
+-   **Laravel Framework**: Version 12.0
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Additional Tools (Optional)
 
-## Learning Laravel
+-   **Laragon** or **Laravel Herd** for local development
+-   **Postman** for API testing
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🚀 Installation & Setup
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1\. Clone the Repository
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone repo-name
+cd folder/api
 
-## Laravel Sponsors
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2\. Install Dependencies
 
-### Premium Partners
+```bash
+composer install
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```
 
-## Contributing
+### 3\. Environment Configuration
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+# Copy the example environment file
+cp .env.example .env
+# Generate application key
+php artisan key:generate
 
-## Code of Conduct
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4\. Database Setup
 
-## Security Vulnerabilities
+Update your `.env` file with your database credentials:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=simple_service_booking_system
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
 
-## License
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 5\. Run Database Migrations & Seeders
+
+```bash
+# Run migrations
+php artisan migrate
+# Seed the database with sample data
+php artisan db:seed
+
+```
+
+### 6\. Optimize Application
+
+```bash
+php artisan optimize
+
+```
+
+### 7\. Start the Development Server
+
+```bash
+# Using Laravel's built-in server
+php artisan serve
+# The application will be available at: http://127.0.0.1:8000 or 8080
+
+```
+
+**Note**: If you're using Laragon or Laravel Herd, you can access the application directly through their provided endpoints.
+
+## 🔐 Default User Credentials
+
+After running the database seeder, you'll have access to:
+
+### Admin Account
+
+-   **Email**: `admin@example.com`
+-   **Password**: `123456`
+-   **Role**: Admin
+
+### Customer Accounts
+
+-   10 customer accounts are created automatically
+-   **Password**: `123456` (for all customers)
+-   **Role**: Customer
+
+### Services
+
+-   200+ Demo services
+
+### Content-Type Headers
+
+-   Use `Content-Type: application/json` for all requests
+-   Use `Accept: application/json` for JSON responses
+
+## 🔗 API Routes
+
+### Authentication Routes
+
+-   `POST /api/login` - User login (Admin/Customer)
+-   `POST /api/register` - User registration
+-   `POST /api/logout` - User logout (requires authentication)
+
+### Service Management Routes
+
+-   `GET /api/services` - List all services (authenticated users - Admin gets to see all, and customer gets to see only the available services)
+-   `POST /api/services` - Create new service (Admin only)
+-   `PUT /api/services/{id}` - Update service (Admin only)
+-   `DELETE /api/services/{id}` - Delete service (Admin only)
+
+### Booking Management Routes
+
+#### Admin Booking Routes
+
+-   `GET /api/admin/bookings` - Get all bookings (Admin only)
+-   `PUT /api/admin/bookings/{id}` - Update booking status (Admin only)
+
+#### Customer Booking Routes
+
+-   `GET /api/bookings` - Get customer's bookings (Customer only)
+-   `POST /api/bookings` - Create new booking (Customer only)
+
+### Common Issues
+
+1. **Authentication Errors**
+
+    - Ensure Bearer token is correctly set
+    - Verify token hasn't expired
+    - Check user role permissions
+
+2. **Database Connection Issues**
+
+    - Verify database credentials in `.env`
+    - Ensure MySQL service is running
+    - Check database exists
+
+3. **Permission Errors**
+
+    - Run `php artisan optimize:clear`
+    - Check file permissions
+    - Verify storage directory is writable

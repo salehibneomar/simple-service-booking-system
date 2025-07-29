@@ -6,31 +6,7 @@
 	defineProps({
 		bookingItem: {
 			type: Object,
-			default: () => ({
-				id: 1,
-				status: '2',
-				user_id: 2,
-				service_id: 1,
-				booking_date: '2025-07-28',
-				created_at: '2025-07-27T20:31:07.000000Z',
-				updated_at: '2025-07-27T20:32:55.000000Z',
-				deleted_at: null,
-				service: {
-					id: 1,
-					name: 'Premium House Cleaning'
-				},
-				user: {
-					id: 2,
-					name: 'Arturo Jacobs',
-					email: 'damore.darrel94642@example.com',
-					email_verified_at: '2025-07-27T20:28:21.000000Z',
-					role: 'customer',
-					status: '1',
-					created_at: '2025-07-27T20:28:23.000000Z',
-					updated_at: '2025-07-27T20:28:23.000000Z',
-					deleted_at: null
-				}
-			})
+			default: () => ({})
 		}
 	})
 
@@ -54,11 +30,9 @@
 
 		<q-item-section>
 			<q-item-label class="text-weight-bold text-primary">
-				Booking #{{ bookingItem?.id }}
+				{{ bookingItem?.service?.name }}
 			</q-item-label>
-			<q-item-label caption class="text-grey-7">
-				Service: {{ bookingItem?.service?.name || `Service ID: ${bookingItem?.service_id}` }}
-			</q-item-label>
+			<q-item-label caption class="text-grey-7"> Booking #ID {{ bookingItem?.id }} </q-item-label>
 			<q-item-label caption class="text-grey-6 q-mt-xs">
 				<q-icon name="calendar_today" size="xs" class="q-mr-xs" />
 				{{ formatBookingDate(bookingItem?.booking_date) }}

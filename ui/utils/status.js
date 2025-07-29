@@ -20,7 +20,7 @@ export const serviceStatusOptions = Object.values(serviceStatus).map((status) =>
 
 export const bookingStatus = {
 	1: {
-		text: 'Confirmed',
+		text: 'Approved',
 		color: 'green-2',
 		textColor: 'green-10',
 		value: 1
