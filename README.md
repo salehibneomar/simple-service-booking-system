@@ -33,7 +33,7 @@ simple-service-booking-system/
 
 ### 📊 Entity Relationship Diagram (ERD)
 
-![Entity Relationship Diagram](https://ibb.co/CjtRWQQ)
+![Entity Relationship Diagram](https://i.ibb.co/BhP0wBB/Screenshot-1.png)
 
 _Entity Relationship Diagram for Simple Service Booking System_
 
