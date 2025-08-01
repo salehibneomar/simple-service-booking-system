@@ -16,6 +16,7 @@
 	const router = useRouter()
 	const route = useRoute()
 	const authStore = useAuthStore()
+	const submitting = ref(false)
 
 	const formData = ref({
 		email: 'admin@example.com',
@@ -35,10 +36,12 @@
 	}
 
 	const handleLogin = async () => {
+		submitting.value = true
 		const response = await authStore.login(formData.value)
 		if (response && authStore.hasAuthUser) {
 			router.push({ path: roleRootRoutes[authStore.authUserRole] || '/' })
 		}
+		submitting.value = false
 	}
 </script>
 
@@ -75,6 +78,8 @@
 						label="Login"
 						color="primary"
 						class="full-width q-mb-md q-mt-sm"
+						:loading="submitting"
+						:disable="submitting"
 					/>
 				</q-form>
 			</q-card-section>

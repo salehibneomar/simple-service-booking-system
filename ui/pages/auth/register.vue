@@ -21,6 +21,8 @@
 		password_confirmation: ''
 	})
 
+	const submitting = ref(false)
+
 	const nameRule = (val) => !!val || 'Name is required'
 	const emailRule = (val) => {
 		if (!val) return 'Email is required'
@@ -34,10 +36,12 @@
 	}
 
 	const handleRegister = async () => {
+		submitting.value = true
 		const response = await authStore.register(formData.value)
 		if (response) {
 			await router.push({ path: '/auth/login', query: { registered: response?.email } })
 		}
+		submitting.value = false
 	}
 </script>
 
@@ -95,6 +99,8 @@
 						color="primary"
 						class="full-width q-mb-md q-mt-sm"
 						unelevated
+						:loading="submitting"
+						:disable="submitting"
 					/>
 				</q-form>
 			</q-card-section>
