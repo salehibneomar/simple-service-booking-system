@@ -31,7 +31,13 @@ simple-service-booking-system/
     └── services/        # API service layers
 ```
 
-## 🛠️ Technology Stack
+## �️ Entity Relationship Diagram (ERD)
+
+![Entity Relationship Diagram](https://ibb.co/CjtRWQQ)
+
+_Entity Relationship Diagram for Simple Service Booking System_
+
+## �🛠️ Technology Stack
 
 ### Backend (API)
 
